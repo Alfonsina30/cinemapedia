@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-
 import 'package:cinemapedia/presentation/widgets/widgets.dart';
 import 'package:cinemapedia/presentation/views/views.dart';
-
 
 
 class HomeScreen extends StatefulWidget {
 
   static const name = 'home-screen';
   final int pageIndex;
+
 
   const HomeScreen({
     super.key, 
@@ -48,6 +47,8 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
   Widget build(BuildContext context) {
     super.build(context);
 
+    print('Dentro de HomeScreen ${widget.pageIndex}');
+
     if ( pageController.hasClients ) {
       pageController.animateToPage(
         widget.pageIndex, 
@@ -60,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
       body: PageView(
         //* Esto evitará que rebote 
         physics: const NeverScrollableScrollPhysics(),
-        controller: pageController,
+        controller: pageController,        
         // index: pageIndex,
         children: viewRoutes,
       ),
