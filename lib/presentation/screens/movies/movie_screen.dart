@@ -118,7 +118,7 @@ class _Genres extends StatelessWidget {
           children: [
             //-- .map itera y return a container
             ...movie.genreIds.map((gender) => Container( //-- el chip esta envuelto en el container para poder aplicar los margenes(margin)
-              color:Colors.red,
+             /// color:Colors.red,
               margin: const EdgeInsets.only( right: 10),
               child: Chip(
                 label: Text( gender ),
