@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'movies_providers.dart';
 
+/// cargamos todas las peliculas
 final initialLoadingProvider = Provider<bool>((ref) {
 
   final step1 = ref.watch( nowPlayingMoviesProvider ).isEmpty;

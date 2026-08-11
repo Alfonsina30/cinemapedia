@@ -3,9 +3,7 @@ import 'package:cinemapedia/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:animate_do/animate_do.dart';
-
 import 'package:cinemapedia/domain/entities/movie.dart';
-
 import 'package:cinemapedia/presentation/providers/providers.dart';
 
 
@@ -29,8 +27,9 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
   @override
   void initState() {
     super.initState();
-    
-    ref.read(movieInfoProvider.notifier).loadMovie(widget.movieId);
+
+    //-- do peticion http
+    ref.read(movieInfoProvider.notifier).loadMovie(widget.movieId); 
     ref.read(actorsByMovieProvider.notifier).loadActors(widget.movieId);
 
   }
@@ -38,17 +37,19 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final Movie? movie = ref.watch( movieInfoProvider )[widget.movieId];
+    final Movie? movie = ref.watch( movieInfoProvider )[widget.movieId]; //-- take value del state map 
 
-    if ( movie == null ) {
-      return const Scaffold(body: Center( child: CircularProgressIndicator( strokeWidth: 2)));
+    if ( movie == null ) { //-- dont have movie
+      return const Scaffold(
+        body: Center( child: CircularProgressIndicator( strokeWidth: 2)));
     }
 
     return Scaffold(
       body: CustomScrollView(
-        physics: const ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(), //-- sin elasticidad
         slivers: [
-          _CustomSliverAppBar(movie: movie),
+          _CustomSliverAppBar(movie: movie), //-- take 70% screen of device
+          
           SliverList(delegate: SliverChildBuilderDelegate(
             (context, index) => _MovieDetails(movie: movie),
             childCount: 1
@@ -69,7 +70,7 @@ class _MovieDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery.sizeOf(context);
     final textStyles = Theme.of(context).textTheme;
 
 
@@ -110,12 +111,14 @@ class _Genres extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: SizedBox(
-        width: double.infinity,
+        width: double.infinity, //-- todo el espacio
         child: Wrap(
           crossAxisAlignment: WrapCrossAlignment.center,
-          alignment: WrapAlignment.center,
+          alignment: WrapAlignment.center, //-- alineacion de los items del wrap
           children: [
-            ...movie.genreIds.map((gender) => Container(
+            //-- .map itera y return a container
+            ...movie.genreIds.map((gender) => Container( //-- el chip esta envuelto en el container para poder aplicar los margenes(margin)
+              color:Colors.red,
               margin: const EdgeInsets.only( right: 10),
               child: Chip(
                 label: Text( gender ),
@@ -210,6 +213,9 @@ class _CustomSliverAppBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
 
     final isFavoriteFuture = ref.watch(isFavoriteProvider(movie.id));
+
+    print('ISFAVORITE $isFavoriteFuture');
+
     final size = MediaQuery.of(context).size;
     final scaffoldBackgroundColor = Theme.of(context).scaffoldBackgroundColor;
 
@@ -225,9 +231,7 @@ class _CustomSliverAppBar extends ConsumerWidget {
             await ref.read( favoriteMoviesProvider.notifier )
               .toggleFavorite(movie);
             
-            ref.invalidate(isFavoriteProvider(movie.id));
-
-
+           ref.invalidate(isFavoriteProvider(movie.id)); //-- do refesh on provider, and then --isFavoriteFuture.when-- is update 
           }, 
           icon: isFavoriteFuture.when(
             loading: () => const CircularProgressIndicator(strokeWidth: 2 ),
@@ -241,7 +245,7 @@ class _CustomSliverAppBar extends ConsumerWidget {
           // icon: const Icon( Icons.favorite_rounded, color: Colors.red )
         )
       ],
-      flexibleSpace: FlexibleSpaceBar(
+      flexibleSpace: FlexibleSpaceBar( //-- flexibleSpace appbar
         titlePadding: const EdgeInsets.only(bottom: 0),
         title:  _CustomGradient(
           begin: Alignment.topCenter,
@@ -270,7 +274,7 @@ class _CustomSliverAppBar extends ConsumerWidget {
             const _CustomGradient(
                begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
-                stops: [0.0, 0.2],
+                stops: [0.0, 0.2],//-- inicia - fin
                 colors: [
                   Colors.black54,
                   Colors.transparent,

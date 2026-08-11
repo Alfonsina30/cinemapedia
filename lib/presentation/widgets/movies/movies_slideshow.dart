@@ -21,19 +21,19 @@ class MoviesSlideshow extends StatelessWidget {
     return SizedBox(
       height: 210,
       width: double.infinity,
-      child: Swiper(
-        viewportFraction: 0.8,
-        scale: 0.9,
+      child: Swiper( //package card_swiper
+        viewportFraction: 0.8, //--space betwen card
+        scale: 0.9, //-- scroll efect
         autoplay: true,
-        pagination: SwiperPagination(
+        pagination: SwiperPagination( 
           margin: const EdgeInsets.only(top: 0),
           builder: DotSwiperPaginationBuilder(
-            activeColor: colors.primary,
+            activeColor: Colors.amber,
             color: colors.secondary
           )
         ),
         itemCount: movies.length,
-        itemBuilder: (context, index) => _Slide(movie: movies[index] ),
+        itemBuilder: (context, index) => _Slide(movie: movies[index] ), // --build images
       ),
     );
   }
@@ -53,14 +53,14 @@ class _Slide extends StatelessWidget {
       borderRadius: BorderRadius.circular(20),
       boxShadow: const [
         BoxShadow(
-          color: Colors.black45,
+          color: Colors.black,
           blurRadius: 10,
-          offset: Offset(0, 10)
+          offset: Offset(0, 10) //--space take the blurRadius
         )
       ]
     );
 
-      
+
     return Padding(
       padding: const EdgeInsets.only( bottom: 30 ),
       child: DecoratedBox(

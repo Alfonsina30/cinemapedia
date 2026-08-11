@@ -3,8 +3,10 @@ import 'package:cinemapedia/domain/entities/movie.dart';
 import 'package:cinemapedia/presentation/providers/providers.dart';
 
 
+/// inicialment es una string vacia que cambia con el valor que se quiere buscar
 final searchQueryProvider = StateProvider<String>((ref) => '');
 
+/// representacion de StateNotifier that working with ListMovie
 final searchedMoviesProvider = StateNotifierProvider<SearchedMoviesNotifier, List<Movie>>((ref) {
 
   final movieRepository = ref.read( movieRepositoryProvider );
@@ -32,7 +34,8 @@ class SearchedMoviesNotifier extends StateNotifier<List<Movie>> {
   Future<List<Movie>> searchMoviesByQuery( String query ) async{
     
     final List<Movie> movies = await searchMovies(query);
-    ref.read(searchQueryProvider.notifier).update((state) => query);
+    print('SEARCH MOVIE $query $movies');
+    ref.read(searchQueryProvider.notifier).update((state) => query); // riverpod method
 
     state = movies;
     return movies;

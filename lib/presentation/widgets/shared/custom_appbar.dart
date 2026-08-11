@@ -40,9 +40,12 @@ class CustomAppbar extends ConsumerWidget {
                   context: context, 
                   delegate: SearchMovieDelegate(
                     initialMovies: searchedMovies,
+                    //function
                     searchMovies: ref.read( searchedMoviesProvider.notifier ).searchMoviesByQuery
                   )
                 ).then((movie) {
+                  print('MOVIEEE $movie');
+                  
                   if ( movie == null ) return;
 
                   context.push('/home/0/movie/${ movie.id }');

@@ -1,6 +1,7 @@
 import 'package:cinemapedia/domain/datasources/local_storage_datasource.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
 import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 
 
 
@@ -16,8 +17,16 @@ class IsarDatasource extends LocalStorageDatasource {
   Future<Isar> openDB() async {
 
     if ( Isar.instanceNames.isEmpty ) {
+
+final dir = await getApplicationDocumentsDirectory();
       
-      return await Isar.open([movieSchema], inspector: true, directory: Isar.defaultName );
+      return await Isar.open(
+        
+        [movieSchema], 
+        //name: 'hi',
+        inspector: true,
+         directory: dir.path);
+        //Isar.defaultName );
     }
 
     return Future.value(Isar.getInstance());
@@ -60,12 +69,18 @@ class IsarDatasource extends LocalStorageDatasource {
   @override
   Future<List<Movie>> loadMovies({int limit = 10, offset = 0}) async {
     
+    //TODO: resolver esta excepcion porque cuando se va a la pagina favoritos el codigo se friza
     final isar = await db;
+
+  List lista = [];
+  lista.where((element) => false);
 
     return isar.movies.where()
       .offset(offset)
       .limit(limit)
-      .findAll();
+      .findAll() ;
+
+      
   }
 
 }

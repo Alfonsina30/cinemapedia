@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cinemapedia/config/helpers/human_formats.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
@@ -66,7 +65,8 @@ class SearchMovieDelegate extends SearchDelegate<Movie?>{
             movie: movies[index],
             onMovieSelected: (context, movie) {
               clearStreams();
-              close(context, movie);
+              close(context, movie); 
+              ///searchDelegate method that received the item selected
             },
           ),
         );
@@ -78,6 +78,7 @@ class SearchMovieDelegate extends SearchDelegate<Movie?>{
   // @override
   // String get searchFieldLabel => 'Buscar película';
 
+/// icon trailing after search
   @override
   List<Widget>? buildActions(BuildContext context) {
 
@@ -118,6 +119,7 @@ class SearchMovieDelegate extends SearchDelegate<Movie?>{
     ];
   }
 
+/// icon leading
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
@@ -129,11 +131,14 @@ class SearchMovieDelegate extends SearchDelegate<Movie?>{
       );
   }
 
+// The results shown after the user submits a search from the search page
   @override
   Widget buildResults(BuildContext context) {
     return buildResultsAndSuggestions();
   }
 
+
+//Suggestions shown in the body of the search page while the user types a query into the search field.
   @override
   Widget buildSuggestions(BuildContext context) {
 
@@ -162,7 +167,7 @@ class _MovieItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        onMovieSelected(context, movie);
+        onMovieSelected(context, movie); /// this function received the index of movie selected
       },
       child: FadeIn(
         child: Padding(

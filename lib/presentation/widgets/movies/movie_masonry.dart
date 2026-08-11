@@ -51,9 +51,9 @@ class _MovieMasonryState extends State<MovieMasonry> {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: MasonryGridView.count(
         controller: scrollController,
-        crossAxisCount: 3, 
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
+        crossAxisCount: 3, // cantidad horizontal
+        mainAxisSpacing: 10, //espacio en vertical y horizontal de los espacios
+        crossAxisSpacing: 10, // --space horizontal each item
         itemCount: widget.movies.length,
         itemBuilder: (context, index) {
 

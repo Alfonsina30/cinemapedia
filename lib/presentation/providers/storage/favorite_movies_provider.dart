@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
 
 
-
+///-- se conecta con isar and send the data to localStorageRepository --> where the provider method interact and return the state: Map with the movie
 final favoriteMoviesProvider = StateNotifierProvider<StorageMoviesNotifier,Map<int,Movie>>((ref) {
   final localStorageRepository = ref.watch( localStorageRepositoryProvider );
   return StorageMoviesNotifier(localStorageRepository: localStorageRepository);

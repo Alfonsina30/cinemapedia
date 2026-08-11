@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
     return Scaffold(
       body: PageView(
         //* Esto evitará que rebote 
-        physics: const NeverScrollableScrollPhysics(),
+       physics: const NeverScrollableScrollPhysics(),
         controller: pageController,        
         // index: pageIndex,
         children: viewRoutes,

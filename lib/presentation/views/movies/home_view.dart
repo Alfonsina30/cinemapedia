@@ -18,6 +18,8 @@ class HomeViewState extends ConsumerState<HomeView> with AutomaticKeepAliveClien
   void initState() {
     super.initState();
     
+    /// different StateNotifierProvider --> ref.read() call the  different method and 
+    /// send different data to the same method --> 'loadNextPage'
     ref.read( nowPlayingMoviesProvider.notifier ).loadNextPage();
     ref.read( popularMoviesProvider.notifier ).loadNextPage();
     ref.read( topRatedMoviesProvider.notifier ).loadNextPage();
@@ -32,7 +34,7 @@ class HomeViewState extends ConsumerState<HomeView> with AutomaticKeepAliveClien
     final initialLoading = ref.watch(initialLoadingProvider);
     if ( initialLoading ) return const FullScreenLoader();
     
-    final slideShowMovies = ref.watch( moviesSlideshowProvider );
+    final slideShowMovies = ref.watch( moviesSlideshowProvider ); // -- get items of nowPlayingMoviesProvider
     final nowPlayingMovies = ref.watch( nowPlayingMoviesProvider );
     final topRatedMovies = ref.watch( topRatedMoviesProvider );
     final upcomingMovies = ref.watch( upcomingMoviesProvider );
@@ -48,12 +50,11 @@ class HomeViewState extends ConsumerState<HomeView> with AutomaticKeepAliveClien
         ),
 
 
-        SliverList(delegate: SliverChildBuilderDelegate(
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
           (context, index) {
               return Column(
                   children: [
-              
-                    // const CustomAppbar(),
               
                     MoviesSlideshow(movies: slideShowMovies ),
               
